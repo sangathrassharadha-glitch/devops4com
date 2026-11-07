@@ -1,42 +1,25 @@
+
 pipeline {
     agent any
 
     stages {
-
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/username/JavaProject.git'
+                url: 'https://github.com/sangathrassharadha-glitch/devops4com.git'
             }
         }
 
-        stage('Compile') {
+        stage('Install Dependencies') {
             steps {
-                bat 'mvn compile'
+                bat 'npm install'
             }
         }
 
-        stage('Test') {
+        stage('Run Application') {
             steps {
-                bat 'mvn test'
+                bat 'node test.js'
             }
-        }
-
-        stage('Package') {
-            steps {
-                bat 'mvn package'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'BUILD SUCCESSFUL'
-            archiveArtifacts artifacts: 'target/*.jar'
-        }
-
-        failure {
-            echo 'BUILD FAILED'
         }
     }
 }
